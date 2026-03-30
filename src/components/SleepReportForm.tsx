@@ -184,22 +184,32 @@ export default function SleepReportForm({
   }
 
   return (
-    <div className="space-y-6 max-w-2xl">
+    <div className="space-y-8 max-w-2xl">
       <BrandHeader
         subtitle="多模态睡眠大模型智能辅助诊疗系统"
-        titleClassName="tracking-wide"
+        titleClassName="tracking-tight"
       />
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" aria-label="睡眠报告表单">
         {/* Fullscreen loading overlay */}
         {isSubmitting && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/30 backdrop-blur-xs border border-white/20 flex-col gap-4">
-            <img
-              src="/images/loading.png"
-              alt="正在分析"
-              className="rounded-lg shadow-xl border-4 border-white/50 max-w-4xl "
-            />
-            <p className="text-lg font-medium">正在分析睡眠数据...</p>
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/60 backdrop-blur-sm flex-col gap-6">
+            <div className="rounded-2xl bg-card p-8 shadow-2xl shadow-primary/10 border border-border">
+              <img
+                src="/images/loading.png"
+                alt="正在分析"
+                className="rounded-xl shadow-lg max-w-md mx-auto"
+              />
+              <div className="mt-6 flex flex-col items-center gap-3">
+                <div className="flex items-center gap-2">
+                  <div className="h-2 w-2 animate-pulse rounded-full bg-primary" />
+                  <div className="h-2 w-2 animate-pulse rounded-full bg-primary/70 animation-delay-150" />
+                  <div className="h-2 w-2 animate-pulse rounded-full bg-primary/40 animation-delay-300" />
+                </div>
+                <p className="text-lg font-medium text-foreground">正在分析睡眠数据...</p>
+                <p className="text-sm text-muted-foreground">请稍候，AI正在处理您的数据</p>
+              </div>
+            </div>
           </div>
         )}
 
@@ -210,41 +220,44 @@ export default function SleepReportForm({
         )}
 
         {!showDelayedSections && (
-          <div className="rounded-lg border border-dashed border-gray-300 p-4 text-sm text-gray-500">
+          <div className="flex items-center gap-3 rounded-xl border-2 border-dashed border-border bg-muted/30 p-5 text-sm text-muted-foreground">
+            <div className="animate-spin rounded-full h-5 w-5 border-2 border-primary border-t-transparent" />
             正在从HIS加载主诉、现病史与附件信息...
           </div>
         )}
         {showDelayedSections && (
           <>
-            <div className="space-y-2">
-              <Label htmlFor="chiefComplaint">
-                主诉 <span className="text-red-500">*</span>
+            <div className="space-y-3">
+              <Label htmlFor="chiefComplaint" className="text-sm font-medium text-foreground">
+                主诉 <span className="text-destructive">*</span>
               </Label>
               <Textarea
                 id="chiefComplaint"
                 placeholder="请输入主诉"
                 rows={3}
+                className="resize-none bg-background transition-all focus:ring-2 focus:ring-primary/20"
                 {...register('chiefComplaint')}
               />
               {errors.chiefComplaint && (
-                <p className="text-sm text-red-500">
+                <p className="text-sm text-destructive">
                   {errors.chiefComplaint.message}
                 </p>
               )}
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="presentIllness">
-                现病史 <span className="text-red-500">*</span>
+            <div className="space-y-3">
+              <Label htmlFor="presentIllness" className="text-sm font-medium text-foreground">
+                现病史 <span className="text-destructive">*</span>
               </Label>
               <Textarea
                 id="presentIllness"
                 placeholder="请输入现病史"
                 rows={4}
+                className="resize-none bg-background transition-all focus:ring-2 focus:ring-primary/20"
                 {...register('presentIllness')}
               />
               {errors.presentIllness && (
-                <p className="text-sm text-red-500">
+                <p className="text-sm text-destructive">
                   {errors.presentIllness.message}
                 </p>
               )}
@@ -306,11 +319,12 @@ export default function SleepReportForm({
 
         <Button
           type="submit"
+          size="lg"
           disabled={isSubmitting || isAnyFileUploading || !isValid}
-          className="w-full"
+          className="w-full h-14 text-base font-medium shadow-md shadow-primary/20 transition-all hover:shadow-lg hover:shadow-primary/30"
         >
-          {isSubmitting && '提交中...'}
-          {!isSubmitting && '分析睡眠'}
+          {isSubmitting && '正在提交...'}
+          {!isSubmitting && '开始分析睡眠数据'}
         </Button>
       </form>
     </div>
