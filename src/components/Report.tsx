@@ -55,7 +55,7 @@ export function Report({ report }: ReportProps) {
   return (
     <div className="space-y-6">
       {/* Report Header */}
-      <BrandHeader subtitle="多模态睡眠大模型诊断报告" className="mb-8" />
+      <BrandHeader className="mb-8" />
       {/* 睡眠分期分布图 + 睡眠指标 */}
       <div className="flex flex-col md:flex-row gap-6">
         {/* 睡眠分期分布图 */}
