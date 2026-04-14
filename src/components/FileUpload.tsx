@@ -165,30 +165,32 @@ export function FileUpload({
           {uploadedUrls.map((url, index) => (
             <div
               key={index}
-              className="flex items-center justify-between p-2 border border-gray-200 rounded-md"
+              className="flex items-center justify-between p-3 border border-border bg-secondary/30 rounded-xl transition-all hover:bg-secondary/50"
             >
-              <div className="flex items-center gap-2 flex-1 min-w-0">
-                <svg
-                  className="h-4 w-4 shrink-0 text-green-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                <p className="text-sm font-medium truncate">
+              <div className="flex items-center gap-3 flex-1 min-w-0">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+                  <svg
+                    className="h-4 w-4 text-primary"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+                <p className="text-sm font-medium text-foreground truncate">
                   {fileNames[index] || `文件 ${index + 1}`}
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => handleRemove(index)}
-                className="ml-2 shrink-0 text-sm text-gray-500 hover:text-gray-700"
+                className="ml-2 shrink-0 rounded-lg px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
               >
                 移除
               </button>
@@ -200,29 +202,31 @@ export function FileUpload({
 
     if (!multiple && uploadedUrls.length > 0) {
       return (
-        <div className="flex items-center justify-between p-3 border border-gray-200 rounded-md">
-          <div className="flex items-center gap-2 flex-1 min-w-0">
-            <svg
-              className="h-5 w-5 shrink-0 text-green-600"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M5 13l4 4L19 7"
-              />
-            </svg>
-            <p className="text-sm font-medium truncate">
+        <div className="flex items-center justify-between p-4 border border-border bg-secondary/30 rounded-xl transition-all hover:bg-secondary/50">
+          <div className="flex items-center gap-3 flex-1 min-w-0">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+              <svg
+                className="h-5 w-5 text-primary"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </div>
+            <p className="text-sm font-medium text-foreground truncate">
               {fileNames[0] || '已上传'}
             </p>
           </div>
           <button
             type="button"
             onClick={handleClear}
-            className="ml-3 shrink-0 text-sm text-gray-500 hover:text-gray-700"
+            className="ml-3 shrink-0 rounded-lg px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
           >
             清除
           </button>
@@ -234,23 +238,23 @@ export function FileUpload({
   };
 
   return (
-    <div className="space-y-2">
-      <Label htmlFor={label}>
+    <div className="space-y-3">
+      <Label htmlFor={label} className="text-sm font-medium text-foreground">
         <span>{label}</span>
         {typeIndicator ? (
-          <span className="ml-2 align-middle text-xs font-medium text-slate-400">
+          <span className="ml-2 rounded-md bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
             {typeIndicator}
           </span>
         ) : null}{' '}
-        {required && <span className="text-red-500">*</span>}
+        {required && <span className="text-destructive">*</span>}
       </Label>
 
       {renderFileList()}
 
       {isUploading && (
-        <div className="flex items-center justify-center p-3 border border-gray-200 rounded-md">
-          <div className="animate-spin rounded-full h-4 w-4 border-2 border-gray-500 border-t-transparent mr-2" />
-          <span className="text-sm">上传中...</span>
+        <div className="flex items-center justify-center p-4 border-2 border-dashed border-primary/30 bg-primary/5 rounded-xl">
+          <div className="animate-spin rounded-full h-5 w-5 border-2 border-primary border-t-transparent mr-3" />
+          <span className="text-sm text-muted-foreground">文件上传中...</span>
         </div>
       )}
 
@@ -263,13 +267,13 @@ export function FileUpload({
           accept={accept}
           multiple={multiple}
           onChange={handleChange}
-          className="cursor-pointer"
+          className="cursor-pointer file:mr-4 file:rounded-lg file:border-0 file:bg-primary/10 file:px-4 file:py-2 file:text-sm file:font-medium file:text-primary hover:file:bg-primary/20 transition-all"
           disabled={isUploading}
         />
       )}
 
       {(error || uploadError) && (
-        <p className="text-sm text-red-500">{error || uploadError}</p>
+        <p className="text-sm text-destructive">{error || uploadError}</p>
       )}
     </div>
   );
