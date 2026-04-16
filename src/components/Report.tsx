@@ -60,15 +60,16 @@ export function Report({ report }: ReportProps) {
       <div className="flex flex-col md:flex-row gap-6">
         {/* 睡眠分期分布图 */}
         {report.sleepStageDistributionChart && (
-          <div className="rounded-2xl border border-border bg-card p-5 flex flex-col items-center justify-center w-full flex-1 shrink-0 shadow-sm">
+          <div className="rounded-2xl border border-border bg-card p-6 flex flex-col w-full flex-1 shrink-0 shadow-sm">
+            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2 text-foreground">
+              <Activity className="w-5 h-5 text-primary" />
+              睡眠分期分布图
+            </h2>
             <img
               src={report.sleepStageDistributionChart}
               alt="睡眠分期分布图"
               className="w-full h-auto object-contain rounded-lg"
             />
-            <h2 className="text-sm font-medium mt-3 text-muted-foreground flex items-center gap-2">
-              <Activity className="w-4 h-4 text-primary" /> 睡眠分期分布图
-            </h2>
           </div>
         )}
 
